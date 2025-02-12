@@ -1,51 +1,61 @@
+// File: android/build.gradle (for keyboard_utils plugin)
+
 group 'br.com.keyboard_utils'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.8.21'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        // Updated Android Gradle Plugin version
+        classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-
 android {
-    compileSdkVersion 28
+    // Updated namespace and SDK/build tools versions
     namespace "br.com.keyboard_utils"
+    compileSdk 35
+    buildToolsVersion "35.0.0"
 
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
     defaultConfig {
-        minSdkVersion 16
+        minSdk 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    lintOptions {
+
+    compileOptions {
+        // Use Java 17 to match your main project if needed
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        // Use jvmTarget 17 – supported by Kotlin 1.8+
+        jvmTarget = "17"
+    }
+
+    sourceSets {
+        main {
+            // Include Kotlin source files
+            java.srcDirs += 'src/main/kotlin'
+        }
+    }
+
+    lint {
         disable 'InvalidPackage'
     }
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Use the updated Kotlin stdlib version
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
