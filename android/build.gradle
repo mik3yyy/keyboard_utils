@@ -1,36 +1,42 @@
 buildscript {
-    ext.kotlin_version = '1.5.20'  // Updated to latest stable Kotlin version
+    ext.kotlin_version = '1.5.20'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'  // Updated AGP version
+        // Updated Android Gradle Plugin version
+        classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'  // Updated plugin notation
+    id 'kotlin-android'
 }
 group 'br.com.keyboard_utils'
 version '1.0-SNAPSHOT'
 android {
+    // Updated namespace and SDK/build tools versions
     namespace "br.com.keyboard_utils"
-    compileSdk 34  // Updated to current stable Android SDK version
+    compileSdk 35
+    buildToolsVersion "35.0.0"
     defaultConfig {
         minSdk 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
+        // Use Java 17 to match your main project if needed
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
+        // Use jvmTarget 17 – supported by Kotlin 1.8+
         jvmTarget = "17"
     }
     sourceSets {
         main {
+            // Include Kotlin source files
             java.srcDirs += 'src/main/kotlin'
         }
     }
@@ -39,5 +45,6 @@ android {
     }
 }
 dependencies {
+    // Use the updated Kotlin stdlib version
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
